@@ -9,6 +9,31 @@ import ProductDetails from './common/product-details';
 import videoGallery from './product/video-gallery';
 import { classifyForm } from './common/form-utils';
 
+$(function(){
+
+    function slickGallery(){
+        var numImgs = $('.custom-image-gallery > div').length;
+        console.log("numImgs = " + numImgs);
+        if(numImgs > 1){
+            $('.custom-image-gallery').slick({
+                lazyLoad : 'ondemand',
+                dots : true,
+                customPaging : function(slider, i){
+                    var thumb = $(slider.$slides[i]).data('thumbnail');
+                    return '<a><img src="'+thumb+'"></a>'
+                }
+            });
+        }
+    }
+    slickGallery();
+
+    // $('.custom-image-gallery.modal-view div.slick-slide > img').each(function(){
+    //     var thisURL = $(this).data('zoom');
+    //     $(this).zoom({url: thisURL });
+    // });
+
+});
+
 export default class Product extends PageManager {
     constructor() {
         super();

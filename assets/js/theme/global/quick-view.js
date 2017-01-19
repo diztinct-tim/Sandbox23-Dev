@@ -8,6 +8,14 @@ import { defaultModal } from './modal';
 export default function (context) {
     const modal = defaultModal();
 
+    function makeZoomable(){
+        console.log("its zoomable");
+        $('.custom-image-gallery.modal-view div.slick-slide').each(function(){
+            var thisURL = $(this).data('zoom');
+            $(this).zoom({url: thisURL });
+        });
+    }
+
     $('body').on('click', '.quickview', (event) => {
         event.preventDefault();
 
@@ -22,5 +30,35 @@ export default function (context) {
 
             return new ProductDetails(modal.$content.find('.quickView'), context);
         });
+    });
+
+    $('body').on('click', '.productView > .custom-image-gallery div.slick-slide', (event) => {
+        event.preventDefault();
+
+        const productId = $(event.currentTarget).parents(".custom-image-gallery").data('product-id');
+
+        modal.open({ size : 'large' });
+
+        utils.api.product.getById(productId, { template: 'products/custom-modal-gallery' }, (err, response) => {
+            console.log(response);
+            modal.updateContent(response);
+
+            modal.$content.parents('#modal').addClass('custom-gallery-modal');
+
+            $('.custom-image-gallery.modal-view').slick({
+                lazyLoad : 'ondemand',
+                dots : true,
+                customPaging : function(slider, i){
+                    var thumb = $(slider.$slides[i]).data('thumbnail');
+                    return '<a><img src="' + thumb + '"></a>'
+                }
+            });
+
+            if($(window).width() > 767){
+                makeZoomable();
+            }
+
+        });
+
     });
 }
