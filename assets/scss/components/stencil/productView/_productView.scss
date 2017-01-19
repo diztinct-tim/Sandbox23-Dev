@@ -358,6 +358,60 @@
 
 
 // CUSTOM SLIDER SCSS
+
+.custom-image-gallery{
+    margin-bottom:60px;
+    padding:0px 20px;
+    .slick-prev,
+    .slick-next{
+        display:none !important;
+    }
+    .slick-slide{
+        > img{
+            margin:0 auto;
+        }
+    }
+    .slick-dots{
+        bottom:-40px;
+        margin-left:-20px;
+        li{
+            height:12px;
+            width:12px;
+            margin:0px 5px;
+            background:#ddd;
+            border: none;
+            border-radius:50%;
+            @include breakpoint("medium"){
+                height:50px;
+                width:50px;
+            }
+            a{
+                img{
+                    display:none;
+                    @include breakpoint("medium"){
+                        display: block;
+                    }
+                }
+            }
+            &.slick-active{
+                background:#999;
+            }
+        }
+    }
+    @include breakpoint("medium"){
+        width: calc(50% - 0px);
+        float: left;
+    }
+}
+
+
+
+
+
+
+
+
+
 .non-zoom-img{
     margin:0 auto;
 
