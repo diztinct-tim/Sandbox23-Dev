@@ -8,8 +8,9 @@
 
 .productView {
     @include grid-row($behavior: "nest");
-    margin-left: -(spacing("base"));
-    margin-right: -(spacing("base"));
+    width:100%;
+    margin-left: 0px;
+    margin-right: 0px;
 
     .modal & {
         padding-bottom: 0;

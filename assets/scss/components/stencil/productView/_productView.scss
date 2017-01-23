@@ -360,8 +360,13 @@
 // CUSTOM SLIDER SCSS
 
 .custom-image-gallery{
-    margin-bottom:60px;
     padding:0px 20px;
+    .slick-list{
+        margin-bottom:60px;
+        @include breakpoint("medium"){
+            margin-bottom:100px;
+        }
+    }
     .slick-prev,
     .slick-next{
         display:none !important;
@@ -384,6 +389,9 @@
             @include breakpoint("medium"){
                 height:50px;
                 width:50px;
+                border-radius:0px;
+                background:none;
+                border:1px solid transparent;
             }
             a{
                 img{
@@ -395,13 +403,21 @@
             }
             &.slick-active{
                 background:#999;
+                @include breakpoint("medium"){
+                    background:transparent;
+                    border:1px solid #000;
+                }
             }
         }
     }
     @include breakpoint("medium"){
         width: calc(50% - 0px);
         float: left;
+        &.modal-view{
+        width:100%;    
+        }
     }
+
 }
 
 

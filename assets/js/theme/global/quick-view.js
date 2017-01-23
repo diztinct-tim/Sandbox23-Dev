@@ -1,4 +1,5 @@
 import $ from 'jquery';
+import 'jquery-zoom';
 import 'foundation-sites/js/foundation/foundation';
 import 'foundation-sites/js/foundation/foundation.dropdown';
 import utils from '@bigcommerce/stencil-utils';
@@ -12,6 +13,7 @@ export default function (context) {
         console.log("its zoomable");
         $('.custom-image-gallery.modal-view div.slick-slide').each(function(){
             var thisURL = $(this).data('zoom');
+            console.log(thisURL);
             $(this).zoom({url: thisURL });
         });
     }
