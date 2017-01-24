@@ -14,9 +14,22 @@ export default function (context) {
         $('.custom-image-gallery.modal-view div.slick-slide').each(function(){
             var thisURL = $(this).data('zoom');
             console.log(thisURL);
-            $(this).zoom({url: thisURL });
+            $(this).zoom({
+                url: thisURL,
+                on: 'click'
+            });
         });
     }
+
+    // onZoomIn: $(".custom-image-gallery > .slick-list").removeClass("draggable"),
+    // onZoomOut: $(".custom-image-gallery > .slick-list").addClass("draggable")
+
+    // $('body').on('click', '.productView > .custom-image-gallery .non-zoom-img', (event) => {    
+    //     console.log("clicked!!!!");
+    //     $(".custom-image-gallery > .slick-list").toggleClass("draggable");
+    // });
+
+
 
     $('body').on('click', '.quickview', (event) => {
         event.preventDefault();
@@ -34,6 +47,8 @@ export default function (context) {
         });
     });
 
+
+
     $('body').on('click', '.productView > .custom-image-gallery div.slick-slide', (event) => {
         event.preventDefault();
 
@@ -42,7 +57,7 @@ export default function (context) {
         modal.open({ size : 'large' });
 
         utils.api.product.getById(productId, { template: 'products/custom-modal-gallery' }, (err, response) => {
-            console.log(response);
+
             modal.updateContent(response);
 
             modal.$content.parents('#modal').addClass('custom-gallery-modal');
@@ -50,15 +65,18 @@ export default function (context) {
             $('.custom-image-gallery.modal-view').slick({
                 lazyLoad : 'ondemand',
                 dots : true,
+                swipe : true,
+                touchMove : false,
+
                 customPaging : function(slider, i){
                     var thumb = $(slider.$slides[i]).data('thumbnail');
                     return '<a><img src="' + thumb + '"></a>'
                 }
             });
 
-            if($(window).width() > 767){
+            // if($(window).width() > 767){
                 makeZoomable();
-            }
+            // }
 
         });
 

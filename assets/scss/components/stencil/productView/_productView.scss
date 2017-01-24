@@ -398,6 +398,11 @@
                     display:none;
                     @include breakpoint("medium"){
                         display: block;
+                        max-height: 42px;
+                        max-width: 42px;
+                        width: auto;
+                        height: auto;
+                        margin: 0 auto;
                     }
                 }
             }
