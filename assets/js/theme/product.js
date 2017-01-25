@@ -26,6 +26,23 @@ $(function(){
         }
     }
     slickGallery();
+    flashMessagePdp();
+
+    function flashMessagePdp(){
+        console.log("flashMessagePdp()");
+        if($(window).width() < 768){
+            $(".custom-image-gallery.slick-initialized.slick-slider").append("<span class='zoom-flash'>Tap To Zoom</span>");
+        } else {
+            $(".custom-image-gallery.slick-initialized.slick-slider").append("<span class='zoom-flash'>Click To Zoom</span>");
+        }
+        fadeInOutFlashMessagePdp();
+    }
+
+    function fadeInOutFlashMessagePdp(){
+        $(".zoom-flash").delay(2000).fadeIn(350, function(){
+            $(this).delay(2000).fadeOut(350);
+        });
+    }
 
     // $('.custom-image-gallery.modal-view div.slick-slide > img').each(function(){
     //     var thisURL = $(this).data('zoom');

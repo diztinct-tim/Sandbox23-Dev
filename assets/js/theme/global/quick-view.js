@@ -11,13 +11,81 @@ export default function (context) {
 
     function makeZoomable(){
         console.log("its zoomable");
-        $('.custom-image-gallery.modal-view div.slick-slide').each(function(){
+
+        // $('.custom-image-gallery.modal-view div.slick-slide').each(function(){
+        //     var thisURL = $(this).data('zoom');
+        //     console.log(thisURL);
+        //     $(this).zoom({
+        //         url: thisURL,
+        //         on: 'dblclick'
+        //     });
+        // });
+
+        flashMessageModal();
+    }
+
+    // $('body').on("dblclick", ".modal-body div.slick-slide", function(){
+    //     console.log("DOUBLE CLICKED ON A DESKTOP");
+    //     var thisURL = $(this).data('zoom');
+    //     var img = "<img src='" + thisURL + "'>";
+        // $(this).zoom({
+        //     url: thisURL,
+        //     on: 'dblclick'
+        // });
+
+        // $(img)
+        //     .addClass('zoomImg')
+        //     .css({
+        //         position: 'absolute',
+        //         top: 0,
+        //         left: 0,
+        //         opacity: 0,
+        //         width: thisURL.width,
+        //         height: thisURL.height,
+        //         border: 'none',
+        //         maxWidth: 'none',
+        //         maxHeight: 'none'
+        //     })
+        //     .appendTo($(this));
+    // });
+
+    var tapped=false;
+    $("body").on("touchstart", ".modal-body div.slick-slide", function(e){
+        if(!tapped){ //if tap is not set, set up single tap
+            tapped=setTimeout(function(){
+                tapped=null
+                //insert things you want to do when single tapped
+            },300);   //wait 300ms then run single click code
+        } else {    //tapped within 300ms of last tap. double tap
+            clearTimeout(tapped); //stop single tap callback
+            tapped=null
+            //insert things you want to do when double tapped
+            console.log("DOUBLE TAPPED ON A TOUCH DEVICE");
             var thisURL = $(this).data('zoom');
-            console.log(thisURL);
+
             $(this).zoom({
                 url: thisURL,
-                on: 'click'
+                on: 'dblclick',
+                callback: console.log(this)
             });
+
+        }
+        e.preventDefault()
+    });
+
+    function flashMessageModal(){
+        console.log("flashMessageModal()");
+        if($(window).width() < 768){
+            $(".custom-image-gallery.modal-view.slick-initialized.slick-slider").append("<span class='zoom-flash-modal'>Double Click To Zoom</span>");
+        } else {
+            $(".custom-image-gallery.modal-view.slick-initialized.slick-slider").append("<span class='zoom-flash-modal'>Hover To Zoom</span>");
+        }
+        fadeInOutFlashMessageModal();
+    }
+
+    function fadeInOutFlashMessageModal(){
+        $(".zoom-flash-modal").delay(2000).fadeIn(350, function(){
+            $(this).delay(2000).fadeOut(350);
         });
     }
 
