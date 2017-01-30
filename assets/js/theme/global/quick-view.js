@@ -12,17 +12,21 @@ export default function (context) {
     function makeZoomable(){
         console.log("its zoomable");
 
-        // $('.custom-image-gallery.modal-view div.slick-slide').each(function(){
-        //     var thisURL = $(this).data('zoom');
-        //     console.log(thisURL);
-        //     $(this).zoom({
-        //         url: thisURL,
-        //         on: 'dblclick'
-        //     });
-        // });
-
+        $('.custom-image-gallery.modal-view div.slick-slide').each(function(){
+            var thisURL = $(this).data('zoom');
+            console.log(thisURL);
+            $(this).zoom({
+                url: thisURL,
+                // on: 'dblclick'
+                on: 'doubletap'
+            });
+        });
         flashMessageModal();
     }
+
+    $(".custom-image-gallery").on("doubletap", ".slick-slide", function(){
+        console.log("doubletapped");
+    });
 
     // $('body').on("dblclick", ".modal-body div.slick-slide", function(){
     //     console.log("DOUBLE CLICKED ON A DESKTOP");
@@ -49,29 +53,29 @@ export default function (context) {
         //     .appendTo($(this));
     // });
 
-    var tapped=false;
-    $("body").on("touchstart", ".modal-body div.slick-slide", function(e){
-        if(!tapped){ //if tap is not set, set up single tap
-            tapped=setTimeout(function(){
-                tapped=null
-                //insert things you want to do when single tapped
-            },300);   //wait 300ms then run single click code
-        } else {    //tapped within 300ms of last tap. double tap
-            clearTimeout(tapped); //stop single tap callback
-            tapped=null
-            //insert things you want to do when double tapped
-            console.log("DOUBLE TAPPED ON A TOUCH DEVICE");
-            var thisURL = $(this).data('zoom');
+    // var tapped=false;
+    // $("body").on("touchstart", ".modal-body div.slick-slide", function(e){
+    //     if(!tapped){ //if tap is not set, set up single tap
+    //         tapped=setTimeout(function(){
+    //             tapped=null
+    //             //insert things you want to do when single tapped
+    //         },300);   //wait 300ms then run single click code
+    //     } else {    //tapped within 300ms of last tap. double tap
+    //         clearTimeout(tapped); //stop single tap callback
+    //         tapped=null
+    //         //insert things you want to do when double tapped
+    //         console.log("DOUBLE TAPPED ON A TOUCH DEVICE");
+    //         var thisURL = $(this).data('zoom');
 
-            $(this).zoom({
-                url: thisURL,
-                on: 'dblclick',
-                callback: console.log(this)
-            });
+    //         $(this).zoom({
+    //             url: thisURL,
+    //             on: 'dblclick',
+    //             callback: console.log(this)
+    //         });
 
-        }
-        e.preventDefault()
-    });
+    //     }
+    //     e.preventDefault()
+    // });
 
     function flashMessageModal(){
         console.log("flashMessageModal()");

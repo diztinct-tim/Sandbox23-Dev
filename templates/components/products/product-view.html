@@ -19,14 +19,13 @@
         {{/each}}
     </section>
     {{else}}
-<!--     <section class="custom-image-gallery">
+    <section class="custom-image-gallery" data-product-id="{{product.id}}">
         {{#each product.images}}
             <div data-thumbnail="{{getImage this 'productthumb_size' (cdn ../theme_settings.default_image_product)}}">
                 <img data-lazy="{{getImage this 'custom_gallery_size' (cdn ../theme_settings.default_image_product)}}" alt="{{this.alt}}">
             </div>
-
         {{/each}}
-    </section> -->
+    </section>
     {{/if}}
 
 
