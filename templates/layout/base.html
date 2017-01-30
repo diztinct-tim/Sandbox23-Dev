@@ -7,6 +7,9 @@
         {{#block "head"}} {{/block}}
         <link href="{{ head.favicon }}" rel="shortcut icon">
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+        <script src="{{cdn '/assets/js/cookie.js'}}"></script>
+
         {{{stylesheet '/assets/css/theme.css'}}}
         {{ getFontsCollection }}
         <script src="{{cdn '/assets/modernizr-custom.js'}}"></script>
@@ -19,6 +22,7 @@
         {{inject 'maintenanceMode' settings.maintenance}}
         {{inject 'urls' urls}}
         {{{snippet 'htmlhead'}}}
+
     </head>
     <body>
         {{{snippet 'header'}}}

@@ -6,6 +6,35 @@ import utils from '@bigcommerce/stencil-utils';
 import ShippingEstimator from './cart/shipping-estimator';
 import { defaultModal } from './global/modal';
 
+
+$(function(){
+
+    function createCookie(name,value) {
+        document.cookie = name+"="+value+"; path=/";
+    }
+
+    var url = window.location.href;
+    if(url.indexOf("cart") > -1){
+        var skus = $(".sku-list").text().slice(0,-1);
+        var qtys = $(".qty-list").text().slice(0,-1);
+        var amts = $(".amt-list").text().replace(/\$|\./g,"").slice(0,-1);
+        var nameList = $(".name-list").text().slice(0,-1);
+        var encoded = encodeURI(nameList);
+        var encodedWithPipes = encoded.replace("%7C","|");
+        console.log(skus);
+        console.log(qtys);
+        console.log(amts);
+        console.log(encodedWithPipes);
+        var linkSharePixelURL = "https://track.linksynergy.com/ep?mid=35397&ord=ORDERID&skulist=" + skus + "&qlist=" + qtys + "&amtlist=" + amts + "&cur=USD&img=1&namelist=" + encodedWithPipes + "";
+        console.log("linkSharePixelURL = " + linkSharePixelURL);
+
+        createCookie('linkSharePixelURL', linkSharePixelURL);
+
+        console.log("I set a cookie!");
+    }
+    
+});
+
 export default class Cart extends PageManager {
     loaded(next) {
         this.$cartContent = $('[data-cart-content]');
