@@ -13,24 +13,50 @@ $(function(){
         document.cookie = name+"="+value+"; path=/";
     }
 
+    function toObject(arr) {
+        var rv = {};
+        for (var i = 0; i < arr.length; ++i)
+            rv[i] = arr[i];
+        return rv;
+    }
+
     var url = window.location.href;
     if(url.indexOf("cart") > -1){
-        var skus = $(".sku-list").text().slice(0,-1);
-        var qtys = $(".qty-list").text().slice(0,-1);
-        var amts = $(".amt-list").text().replace(/\$|\./g,"").slice(0,-1);
-        var nameList = $(".name-list").text().slice(0,-1);
-        var encoded = encodeURI(nameList);
-        var encodedWithPipes = encoded.replace("%7C","|");
-        console.log(skus);
-        console.log(qtys);
-        console.log(amts);
-        console.log(encodedWithPipes);
-        var linkSharePixelURL = "https://track.linksynergy.com/ep?mid=35397&ord=ORDERID&skulist=" + skus + "&qlist=" + qtys + "&amtlist=" + amts + "&cur=USD&img=1&namelist=" + encodedWithPipes + "";
-        console.log("linkSharePixelURL = " + linkSharePixelURL);
+        var stamp = (new Date()).getTime();
+        var idx = $(".idx-list").text().slice(0,-1).split("|");
+        var skus = $(".sku-list").text().slice(0,-1).split("|");
+        var qtys = $(".qty-list").text().slice(0,-1).split("|");
+        var amts = $(".amt-list").text().replace(/\$|\./g,"").slice(0,-1).split("|");
+        var nameList = $(".name-list").text().slice(0,-1).split("|");
+        var names = nameList.map(function(name){
+            return encodeURI(name);
+        });
 
-        createCookie('linkSharePixelURL', linkSharePixelURL);
+        var idxObj = toObject(idx);
+        var skusObj = toObject(skus);
+        var qtysObj = toObject(qtys);
+        var amtsObj = toObject(amts);
+        var namesObj = toObject(names);
 
-        console.log("I set a cookie!");
+        // console.log(stamp);
+        // console.log(idxObj);
+        // console.log(skusObj);
+        // console.log(qtysObj);
+        // console.log(amtsObj);
+        // console.log(namesObj);
+
+        var imgURLs = [];
+        for(var i = 0; i < idx.length; i++) {
+            var lid = Number(i+1);
+            imgURLs[i] = "<img src='https://www.rkdms.com/order.gif?mid=dbelectrical&oid=ORDERID&lid=" + lid + "&iid=" + skusObj[i] + "&icent=" + amtsObj[i] + "&iqty=" + qtysObj[i] + "&iname=" + namesObj[i] + "&ts=" + stamp + "' height='1' width='1'>";
+        }
+
+        console.log(JSON.stringify(imgURLs));
+        var merkleURLs = JSON.stringify(imgURLs);
+
+        createCookie('merkleURLs', merkleURLs);
+        // console.log("I set a cookie!");
+
     }
     
 });
